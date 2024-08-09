@@ -1,4 +1,3 @@
-// routes/routes.go
 package routes
 
 import (
@@ -8,12 +7,16 @@ import (
 	"gorm.io/gorm"
 )
 
-// type AppHandlers struct {
-// 	UserHandler *handlers.UserHandler
-// }
-
 func SetupRoutes(app *fiber.App, db *gorm.DB) {
+	// users
 	userRepository := repositories.NewUserRepository(db)
 	userHandler := handlers.NewUserHandler(userRepository)
 	app.Get("/user/:id", userHandler.GetUserByID)
+	app.Post("/user", userHandler.CreateUser)
+
+	// roles
+	roleRepository := repositories.NewRoleRepository(db)
+	roleHandler := handlers.NewRoleHandler(roleRepository)
+	app.Post("/role", roleHandler.CreateRole)
+	app.Get("/roles", roleHandler.GetRoles)
 }

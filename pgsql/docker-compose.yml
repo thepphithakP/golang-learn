@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:alpine3.20
     container_name: postgres-container
     environment:
       POSTGRES_DB: userservice
@@ -11,4 +11,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - d:/mnt/docker/pgsql:/var/lib/postgresql/data
+      - ./initdb.d:/docker-entrypoint-initdb.d

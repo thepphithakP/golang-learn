@@ -1,14 +1,15 @@
 package models
 
 import (
-    "gorm.io/gorm"
+	"gorm.io/gorm"
 )
 
 type Role struct {
-    gorm.Model
-    Name string `gorm:"unique"`
+	gorm.Model
+	ID   uint   `gorm:"primaryKey;autoIncrement"`
+	Name string `gorm:"unique"`
 }
 
 func (Role) TableName() string {
-    return "demo.roles"
+	return "public.roles"
 }

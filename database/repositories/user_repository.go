@@ -27,13 +27,14 @@ func (r *UserRepository) GetUserByID(userID uint) (*models.User, error) {
 	return &user, nil
 }
 
-func (r *UserRepository) CreateUser(user *models.User) error {
+// CreateUser Update CreateUser method in UserRepository
+func (r *UserRepository) CreateUser(user *models.User) (*models.User, error) {
 	// Hash the password using bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
 		// Log error
 		log.Printf("Error hashing password: %v", err)
-		return err
+		return nil, err
 	}
 
 	// Set the hashed password to the user
@@ -43,8 +44,8 @@ func (r *UserRepository) CreateUser(user *models.User) error {
 	if err := r.db.Create(user).Error; err != nil {
 		// Log error
 		log.Printf("Error creating user: %v", err)
-		return err
+		return nil, err
 	}
 
-	return nil
+	return user, nil
 }
